@@ -7,10 +7,13 @@ const mime = require('mime-types')
 
 app.get('/*', async (req, res) => {
     
-    // This is for API GW  req.requestContext.path = req.requestContext.path.replace("/Prod","")
-    //let tmp = req.requestContext.path;
+    /*
+        This is for API GW  
+        req.requestContext.path = req.requestContext.path.replace("/Prod","")
+        let file = req.requestContext.path.replace("/","")
+    */
     
-    file = req.url.replace("/","")
+    let file = req.url.replace("/","")
 
     if(file === ''){
         file = "index.html"
@@ -28,7 +31,6 @@ app.get('/*', async (req, res) => {
         const { Body } = await s3.getObject(params).promise()
         res.send(Body.toString())
     }
-    
 });
 
 module.exports.lambdaHandler = serverless(app);
