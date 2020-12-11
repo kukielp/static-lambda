@@ -1,5 +1,5 @@
 {
-  "name": "Static-App",
+  "name": "Static_App",
   "version": "0.0.1",
   "description": "Serve Static content from Lambda",
   "main": "app.js",
@@ -7,9 +7,8 @@
   "author": "Paul Kukiel",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
-    "mime-types": "^2.1.27",
-    "serverless-http": "^2.6.0"
+    "istextorbinary": "^5.12.0",
+    "mime-types": "^2.1.27"
   },
   "scripts": {
     "test": "mocha tests/unit/"

@@ -1,43 +1,39 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Sample SAM Template
+  Static App
 
 Globals:
   Function:
     Timeout: 3
 
 Resources:
-  ExpressBackend:
+  StaticBackend:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: static-app/
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       MemorySize: 3008
+      Tracing: Active
       Events:
         HelloWorld:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /{proxy+}
             Method: get
-    Policies:
-      - AWSLambdaExecute
-      - Version: '2012-10-17' 
-        Statement:
-          - Effect: Allow
-            Action:
-              - s3:GetObject
-              - s3:GetObjectACL
+      Policies:
+        - AWSLambdaExecute
+        - AmazonS3ReadOnlyAccess
 
 Outputs:
   StaticExpressApp:
     Description: API Gateway endpoint URL for Prod stage for Static function
     Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/
-  ExpressBackendFunction:
-    Description: Express Backend Lambda Function ARN
-    Value: !Sub ExpressBackend.Arn
-  ExpressBackendIamRole:
+      Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/
+  StaticBackendFunction:
+    Description: Static Backend Lambda Function ARN
+    Value: !Sub StaticBackend.Arn
+  StaticBackendIamRole:
     Description: Implicit IAM Role created for Static Appfunction
-    Value: !Sub ExpressBackendFunctionRole.Arn
+    Value: !Sub StaticBackendFunctionRole.Arn
